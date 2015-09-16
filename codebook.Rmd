@@ -1,0 +1,129 @@
+---
+title: "Codebook for the 'Human Activity Recognition' Data Analysis"
+author: "Despoina Evangelakou"
+date: "Wednesday September 16, 2015"
+output: html_document
+---
+## Some Background Information
+
+An experiment has been performed with 30 human subjects carrying a Smartphone while performing different physical activities: sitting, laying, going upstairs etc. The measurements taken were with the 3-axial acceleration from the accelerometer and the 3-axial angular velocity from the gyroscope of the smartphone with a fix rate of 50 Hz. More details on the recorded data and their processing, you can fing the features_info file downloaded with the data. 
+
+The different variables estimated from the experiment have been recorded in the files `X_train` and `X_test`. The two files have been produced by randomly splitting up the dataset to a training dataset and a test one. 
+
+## Cleaning the dataset 
+
+The script run_analysis.R performs the following actions: 
+
+1.  Reads in the relevant for the analysis data files: `X_train`, `X_test`, `y_train`, `y_test`, `subject_train`, `subject_test`, `features` and `activity_labels`. 
+In summary:
+    * the `X_` files contain the experimental measurements for 561 variables, 
+    * the `y_` files contain the activity labels to which each measurement corresponds, 
+    * the `subject_` files contain a label that associates each measurement to a subject, 
+    * the `features` file contains the correspondence between observables and their numerical labels, and finally, 
+    * the `activity_labels` contains the correspondence between activities and their numerical labels. 
+
+   For more details on the information in each file, see the `README` file of the original dataset. 
+
+
+2.  All header names were replaced with more intuitive ones: 
+
+    * All numerical labels are changed to more intuitive names, e.g. each activity number was replaced with the activity name (1 -> Walking, etc.). 
+    * Each variable header was replaced with the name of the variable in an easier to understand way, e.g. `Gyro` was replaced with `Gyroscope` or `arCoeff` with  `AutorRegresionCoefficient`. In my naming convention I used camel fonts to ease the readability of the headers, e.g. `TimeGravity`. 
+    * Any underscores (_), dashes (-), commas (,) or parenthenses (()) in the initial naming were removed. 
+    * Duplicate columns originating from the 3-dimensional measurement of energy bands were also suppressed. 
+
+
+
+3.  All files were combined to one file that now includes the measurements (variables), the activities performed and the subject's ID. 
+
+## Final Tidy Dataset 
+
+A new tidier dataset (MeanStdMeasurements) was created containing 180 observables and 67 variables: 
+
+180 Observables (rows): 
+
+* 30 Subjects `times` 6 activities per Subject 
+ 
+67 Variables (columns): 
+
+* Subject (1-30), 
+* Subject Activity (sitting, laying, etc.), and 
+* Mean- and Standard Deviation- related values (any variable containing the words *mean* or *std*). This column actually shows the average (mean) values of the mean- and std- related observables per activity per subject. 
+
+Explicitely, the final column names: 
+
+ "Subject"                                        
+ "SubjectActivity"                               
+ "TimeBodyAccelerometer_Mean_X"                   
+ "TimeBodyAccelerometer_Mean_Y"                  
+ "TimeBodyAccelerometer_Mean_Z"                   
+ "TimeGravityAccelerometer_Mean_X"               
+ "TimeGravityAccelerometer_Mean_Y"                
+ "TimeGravityAccelerometer_Mean_Z"               
+ "TimeBodyAccelerometerJerk_Mean_X"               
+ "TimeBodyAccelerometerJerk_Mean_Y"              
+ "TimeBodyAccelerometerJerk_Mean_Z"               
+ "TimeBodyGyroscope_Mean_X"                      
+ "TimeBodyGyroscope_Mean_Y"                       
+ "TimeBodyGyroscope_Mean_Z"                      
+ "TimeBodyGyroscopeJerk_Mean_X"                   
+ "TimeBodyGyroscopeJerk_Mean_Y"                  
+ "TimeBodyGyroscopeJerk_Mean_Z"                   
+ "FrequencyBodyAccelerometer_Mean_X"             
+ "FrequencyBodyAccelerometer_Mean_Y"              
+ "FrequencyBodyAccelerometer_Mean_Z"             
+ "FrequencyBodyAccelerometer_MeanFreq_X"          
+ "FrequencyBodyAccelerometer_MeanFreq_Y"         
+ "FrequencyBodyAccelerometer_MeanFreq_Z"          
+ "FrequencyBodyAccelerometerJerk_Mean_X"         
+ "FrequencyBodyAccelerometerJerk_Mean_Y"          
+ "FrequencyBodyAccelerometerJerk_Mean_Z"         
+ "FrequencyBodyAccelerometerJerk_MeanFreq_X"      
+ "FrequencyBodyAccelerometerJerk_MeanFreq_Y"     
+ "FrequencyBodyAccelerometerJerk_MeanFreq_Z"      
+ "FrequencyBodyGyroscope_Mean_X"                 
+ "FrequencyBodyGyroscope_Mean_Y"                  
+ "FrequencyBodyGyroscope_Mean_Z"                 
+ "FrequencyBodyGyroscope_MeanFreq_X"              
+ "FrequencyBodyGyroscope_MeanFreq_Y"             
+ "FrequencyBodyGyroscope_MeanFreq_Z"              
+ "FrequencyBodyAccelerometerMag_MeanFreq"        
+ "FrequencyBodyAccelerometerJerkMag_MeanFreq"     
+ "FrequencyBodyGyroscopeMag_MeanFreq"            
+ "FrequencyBodyGyroscopeJerkMag_MeanFreq"         
+ "AngleTimeBodyAccelerometerMean_gravity"        
+ "AngleTimeBodyAccelerometerJerkMean_gravityMean" 
+ "AngleTimeBodyGyroscopeMean_gravityMean"        
+ "AngleTimeBodyGyroscopeJerkMean_gravityMean"     
+ "TimeBodyAccelerometer_Std_X"                   
+ "TimeBodyAccelerometer_Std_Y"                    
+ "TimeBodyAccelerometer_Std_Z"                   
+ "TimeGravityAccelerometer_Std_X"                 
+ "TimeGravityAccelerometer_Std_Y"                
+ "TimeGravityAccelerometer_Std_Z"                 
+ "TimeBodyAccelerometerJerk_Std_X"               
+ "TimeBodyAccelerometerJerk_Std_Y"                
+ "TimeBodyAccelerometerJerk_Std_Z"               
+ "TimeBodyGyroscope_Std_X"                        
+ "TimeBodyGyroscope_Std_Y"                       
+ "TimeBodyGyroscope_Std_Z"                        
+ "TimeBodyGyroscopeJerk_Std_X"                   
+ "TimeBodyGyroscopeJerk_Std_Y"                    
+ "TimeBodyGyroscopeJerk_Std_Z"                   
+ "FrequencyBodyAccelerometer_Std_X"               
+ "FrequencyBodyAccelerometer_Std_Y"              
+ "FrequencyBodyAccelerometer_Std_Z"               
+ "FrequencyBodyAccelerometerJerk_Std_X"          
+ "FrequencyBodyAccelerometerJerk_Std_Y"           
+ "FrequencyBodyAccelerometerJerk_Std_Z"          
+ "FrequencyBodyGyroscope_Std_X"                   
+ "FrequencyBodyGyroscope_Std_Y"                  
+ "FrequencyBodyGyroscope_Std_Z"     
+
+The final dataset is saved in a text file for easier distribution. 
+
+ 
+## Acknowledgements 
+
+I would like to thank the community TAs and the community in total, withou whose help I would not have been able to complete this assignment.  
+
